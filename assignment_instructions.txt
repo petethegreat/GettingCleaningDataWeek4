@@ -28,3 +28,13 @@ Uses descriptive activity names to name the activities in the data set
 Appropriately labels the data set with descriptive variable names.
 From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
 
+-- PT 
+- read data for subject, X (variables), y (activity). 
+  -- activity should be treated as a factor, with descriptive names. 
+  -- When reading X variables, we only care about things that are means or standard deviations, so only keep certain columns. 
+  -- merge these things into one dataframe. 
+  -- Do this for both test and train, and merge this data into one bigass dataframe.
+- tidy this data
+  - from our big dataset above, group columns by subject and activity, and take the mean of all (variable) (so we'll have the mean (averaged over all trials) of the mean total acceleration (averaged over all samples collected for the trial) for subject 2 climbing stairs. 
+  - there are 46 means and 33 std deviations, so we should end up with 79 columns (for mean measurement variables)
+  

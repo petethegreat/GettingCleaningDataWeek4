@@ -21,7 +21,8 @@ loadRawData<-function()
 	# do train then test for all things, otherwise oredering will get screwed up
 	message('merging train and test measurements')
 	totalMeasures<-rbind(trainMeasures,testMeasures)
-	
+    # delete the individual test and train to free memory
+	rm(trainMeasures,testMeasures)
 	
 	# subject ids
 	message('reading train subjects')
@@ -31,6 +32,8 @@ loadRawData<-function()
 	# merge subjects
 	message('merging train and test subjects')
 	totalSubjects<-rbind(trainSubjects,testSubjects)
+    # free memory
+    rm(trainSubjects,testSubjects)
 	
 	# Activities
 	message('reading train activities')
@@ -40,10 +43,13 @@ loadRawData<-function()
 	
 	message('merging train and test activities')
 	totalActivity<-rbind(trainActivity,testActivity)
-	
+	# free memory
+    rm(trainActivity,testActivity)
 	
 	# have all the columns now. Merge rows into one big dataframe
 	Dataset<-cbind(totalSubjects,totalActivity,totalMeasures)
+    # total dataframes will go out of scope and be freed shortly, so no need to rm them (done reading data in)
+    # add column names to data frame, 
 	names(Dataset)<-c('subject','activity',features[[1]])
 	Dataset
 	
