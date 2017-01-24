@@ -1,5 +1,21 @@
+main<-function()
+{
+	# load the raw data
+	rawData<<-loadRawData()
+	# clean this - give the columns descriptive names,
+	# remove unwanted columns (those that are not a mean or standard deviation measurement)
+	cleaned<<-cleanData(rawData)
+	
+	
+}
 
-
+cleanData<-function(theRawData)
+{
+	#
+	return(theRawData)
+	
+}
+	
 loadRawData<-function()
 {
 	# load all of the raw data into one big dataset.
@@ -52,17 +68,7 @@ loadRawData<-function()
     # add column names to data frame, 
 	names(Dataset)<-c('subject','activity',features[[1]])
 	Dataset
-	
-	
-	
-	
-	
-	# train activities
-	
-	
-	
-	
-	
-	
-	
+		
 }
+
+main()
