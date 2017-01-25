@@ -16,10 +16,22 @@ cleanData<-function(theRawData)
 	meanNames<-grep('mean()',features[[1]],fixed=TRUE,value=TRUE)
 	stdNames<-grep('std()',features[[1]],fixed=TRUE,value=TRUE)
 	
+	#want MeanBodyAccelerationXcomponentTimeSerie
 	descMeanNames<-gsub('-mean()','',meanNames,fixed=TRUE)
-	descMeanNames<-gsub('^t','TimeSeriesMean',descMeanNames)
+	descMeanNames<-gsub('-([XYZ])$','\\1Component',descMeanNames) 
+	descMeanNames<-gsub('^t(.*)','\\1TimeSeriesMean',descMeanNames)
+	descMeanNames<-gsub('^f(.*)','\\1FrequencyDomainMean',descMeanNames)
+	# descMeanNames<-gsub('^f','MeanFrequencyDomain',descMeanNames)
+	descMeanNames<-gsub('GyroJerk','AngularJerk',descMeanNames)
+	descMeanNames<-gsub('Gyro','AngularVelocity',descMeanNames)
+	
 	descMeanNames<-gsub('Acc','Acceleration',descMeanNames,fixed=TRUE)
-	descMeanNames<-gsub('-([XYZ])$','\0Component',descMeanNames) - borked
+	descMeanNames<-gsub('Mag','Magnitude',descMeanNames,fixed=TRUE)
+	descMeanNames<-gsub('BodyBody','Body',descMeanNames,fixed=TRUE)
+	
+	
+	
+	
 	
 	
 	
