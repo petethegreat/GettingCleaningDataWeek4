@@ -36,5 +36,6 @@ From the data set in step 4, creates a second, independent tidy data set with th
   -- Do this for both test and train, and merge this data into one bigass dataframe.
 - tidy this data
   - from our big dataset above, group columns by subject and activity, and take the mean of all (variable) (so we'll have the mean (averaged over all trials) of the mean total acceleration (averaged over all samples collected for the trial) for subject 2 climbing stairs. 
-  - there are 46 means and 33 std deviations, so we should end up with 79 columns (for mean measurement variables)
+  - there are 46 means and 33 std deviations, so we should end up with 79 columns (for mean measurement variables) - not true, a bunch of those means are mean frequency
+  
   

@@ -4,9 +4,9 @@ main<-function()
 	rawData<<-loadRawData()
 	# clean this - give the columns descriptive names,
 	# remove unwanted columns (those that are not a mean or standard deviation measurement)
-	cleaned<<-cleanData(rawData)
+	cleanedData<<-cleanData(rawData)
     # take the mean of the columns of interest, grouped by activity and subject
-    tidy<<-aggregate(cleaned[,3:68],by=cleaned[,c('subject','activity')],FUN=mean)
+    tidyData<<-aggregate(cleaned[,3:68],by=cleaned[,c('subject','activity')],FUN=mean)
 
 	
 	
@@ -16,18 +16,35 @@ cleanData<-function(theRawData)
 {
 	#
 	features<-names(theRawData)
+	# find which columns we want to keep based on their names
+	# get (names of) variables corresponding to measurement means
 	meanNames<-grep('mean()',features,fixed=TRUE,value=TRUE)
+	# get (names of) variables corresponding to standard deviation of measurements
 	stdNames<-grep('std()',features,fixed=TRUE,value=TRUE)
+	#note - meanNames omits variables that are mean frequencies. This is intentional, and discussed in README.md
 	
-	#want MeanBodyAccelerationXcomponentTimeSeriesMean
-	descMeanNames<-gsub('-mean()','',meanNames,fixed=TRUE)
+	
+	
+	
+	#want output format like (for example) MeanBodyAccelerationXcomponentTimeSeriesMean
+	# remove the '-mean()'
+	descMeanNames<-gsub('-mean()','',meanNames,fixed=TRUE) 
+	# replace "-X" with "XComponent"
 	descMeanNames<-gsub('-([XYZ])$','\\1Component',descMeanNames) 
-	descMeanNames<-gsub('^t(.*)','\\1TimeSeriesMean',descMeanNames)
+	# If something begins with t, strip the initial t and append "TimeSeriesMean"
+	descMeanNames<-gsub('^t(.*)','\\1TimeSeriesMean',descMeanNames) 
+	# If something begins with t, strip the initial t and append "FrequencyDomainMean"
 	descMeanNames<-gsub('^f(.*)','\\1FrequencyDomainMean',descMeanNames)
-	# descMeanNames<-gsub('^f','MeanFrequencyDomain',descMeanNames)
+	# replace "GyroJerk" with AngularJerk - rate of change of angular velocity 
+	# (why is this not angular acceleration? using "Jerk" instead of acceleration for consistency, 
+	# but I think this *should* be acceleration. The readme in the raw dataset says that the
+	# gyro measures angular velocity. If this is differentiated once, it should give angular 
+	# acceleration, not angular jerk). 
 	descMeanNames<-gsub('GyroJerk','AngularJerk',descMeanNames)
+	# Any gyros remaining in names at this stage should be angular velocities, not jerk/acceleration
 	descMeanNames<-gsub('Gyro','AngularVelocity',descMeanNames)
 	
+		
 	descMeanNames<-gsub('Acc','Acceleration',descMeanNames,fixed=TRUE)
 	descMeanNames<-gsub('Mag','Magnitude',descMeanNames,fixed=TRUE)
 	descMeanNames<-gsub('BodyBody','Body',descMeanNames,fixed=TRUE)
