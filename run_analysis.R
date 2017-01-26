@@ -5,6 +5,7 @@ main<-function()
 	# clean this - give the columns descriptive names,
 	# remove unwanted columns (those that are not a mean or standard deviation measurement)
 	cleaned<<-cleanData(rawData)
+
 	
 	
 }
@@ -13,8 +14,8 @@ cleanData<-function(theRawData)
 {
 	#
 	features<-names(theRawData)
-	meanNames<-grep('mean()',features[[1]],fixed=TRUE,value=TRUE)
-	stdNames<-grep('std()',features[[1]],fixed=TRUE,value=TRUE)
+	meanNames<-grep('mean()',features,fixed=TRUE,value=TRUE)
+	stdNames<-grep('std()',features,fixed=TRUE,value=TRUE)
 	
 	#want MeanBodyAccelerationXcomponentTimeSerie
 	descMeanNames<-gsub('-mean()','',meanNames,fixed=TRUE)
@@ -29,9 +30,21 @@ cleanData<-function(theRawData)
 	descMeanNames<-gsub('Mag','Magnitude',descMeanNames,fixed=TRUE)
 	descMeanNames<-gsub('BodyBody','Body',descMeanNames,fixed=TRUE)
 	
+	descStdNames<-gsub('-std()','',stdNames,fixed=TRUE)
+    descStdNames<-gsub('-([XYZ])$','\\1Component',descStdNames) 
+    descStdNames<-gsub('^t(.*)','\\1TimeSeriesStandardDeviation',descStdNames)
+    descStdNames<-gsub('^f(.*)','\\1FrequencyDomainMean',descStdNames)
+    # descMeanNames<-gsub('^f','MeanFrequencyDomain',descMeanNames)
+    descStdNames<-gsub('GyroJerk','AngularJerk',descStdNames)
+    descStdNames<-gsub('Gyro','AngularVelocity',descStdNames)
+    
+    descStdNames<-gsub('Acc','Acceleration',descStdNames,fixed=TRUE)
+    descStdNames<-gsub('Mag','Magnitude',descStdNames,fixed=TRUE)
+    descStdNames<-gsub('BodyBody','Body',descStdNames,fixed=TRUE)
 	
-	
-	
+	slimmed<-theRawData[,c('subject','activity',meanNames,stdNames)]
+    #names(slimmed)<-c('subject','activity',descMeanNames,descStdNames)
+    return(slimmed)
 	
 	
 	
@@ -108,10 +121,9 @@ cleanData<-function(theRawData)
 	# fBodyBodyAccJerkMag-std()
 	# fBodyBodyGyroMag-std()
 	# fBodyBodyGyroJerkMag-std()
+
 	
 	
-	
-	return(theRawData)
 	
 }
 	
