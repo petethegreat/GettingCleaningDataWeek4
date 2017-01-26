@@ -5,6 +5,8 @@ main<-function()
 	# clean this - give the columns descriptive names,
 	# remove unwanted columns (those that are not a mean or standard deviation measurement)
 	cleaned<<-cleanData(rawData)
+    # take the mean of the columns of interest, grouped by activity and subject
+    tidy<<-aggregate(cleaned[,3:68],by=cleaned[,c('subject','activity')],FUN=mean)
 
 	
 	
@@ -17,7 +19,7 @@ cleanData<-function(theRawData)
 	meanNames<-grep('mean()',features,fixed=TRUE,value=TRUE)
 	stdNames<-grep('std()',features,fixed=TRUE,value=TRUE)
 	
-	#want MeanBodyAccelerationXcomponentTimeSerie
+	#want MeanBodyAccelerationXcomponentTimeSeriesMean
 	descMeanNames<-gsub('-mean()','',meanNames,fixed=TRUE)
 	descMeanNames<-gsub('-([XYZ])$','\\1Component',descMeanNames) 
 	descMeanNames<-gsub('^t(.*)','\\1TimeSeriesMean',descMeanNames)
@@ -33,7 +35,7 @@ cleanData<-function(theRawData)
 	descStdNames<-gsub('-std()','',stdNames,fixed=TRUE)
     descStdNames<-gsub('-([XYZ])$','\\1Component',descStdNames) 
     descStdNames<-gsub('^t(.*)','\\1TimeSeriesStandardDeviation',descStdNames)
-    descStdNames<-gsub('^f(.*)','\\1FrequencyDomainMean',descStdNames)
+    descStdNames<-gsub('^f(.*)','\\1FrequencyDomainStandardDeviation',descStdNames)
     # descMeanNames<-gsub('^f','MeanFrequencyDomain',descMeanNames)
     descStdNames<-gsub('GyroJerk','AngularJerk',descStdNames)
     descStdNames<-gsub('Gyro','AngularVelocity',descStdNames)
@@ -43,7 +45,8 @@ cleanData<-function(theRawData)
     descStdNames<-gsub('BodyBody','Body',descStdNames,fixed=TRUE)
 	
 	slimmed<-theRawData[,c('subject','activity',meanNames,stdNames)]
-    #names(slimmed)<-c('subject','activity',descMeanNames,descStdNames)
+    names(slimmed)<-c('subject','activity',descMeanNames,descStdNames)
+
     return(slimmed)
 	
 	
@@ -52,78 +55,6 @@ cleanData<-function(theRawData)
 	# count 33 means and 33 stds - that's 66 variables of interest.
 	# also want activity and subject - thats 68 variables in total.
 	# meanFreq - mean frequency of the measurement. This is (I think) something we don't want.
-	# means:
-	# tBodyAcc-mean()-X
-	# tBodyAcc-mean()-Y
-	# tBodyAcc-mean()-Z
-	# tGravityAcc-mean()-X
-	# tGravityAcc-mean()-Y
-	# tGravityAcc-mean()-Z
-	# tBodyAccJerk-mean()-X
-	# tBodyAccJerk-mean()-Y
-	# tBodyAccJerk-mean()-Z
-	# tBodyGyro-mean()-X
-	# tBodyGyro-mean()-Y
-	# tBodyGyro-mean()-Z
-	# tBodyGyroJerk-mean()-X
-	# tBodyGyroJerk-mean()-Y
-	# tBodyGyroJerk-mean()-Z
-	# tBodyAccMag-mean()
-	# tGravityAccMag-mean()
-	# tBodyAccJerkMag-mean()
-	# tBodyGyroMag-mean()
-	# tBodyGyroJerkMag-mean()
-	# fBodyAcc-mean()-X
-	# fBodyAcc-mean()-Y
-	# fBodyAcc-mean()-Z
-	# fBodyAccJerk-mean()-X
-	# fBodyAccJerk-mean()-Y
-	# fBodyAccJerk-mean()-Z
-	# fBodyGyro-mean()-X
-	# fBodyGyro-mean()-Y
-	# fBodyGyro-mean()-Z
-	# fBodyAccMag-mean()
-	# fBodyBodyAccJerkMag-mean()
-	# fBodyBodyGyroMag-mean()
-	# fBodyBodyGyroJerkMag-mean()
-	
-	# standard deviations:
-	# tBodyAcc-std()-X
-	# tBodyAcc-std()-Y
-	# tBodyAcc-std()-Z
-	# tGravityAcc-std()-X
-	# tGravityAcc-std()-Y
-	# tGravityAcc-std()-Z
-	# tBodyAccJerk-std()-X
-	# tBodyAccJerk-std()-Y
-	# tBodyAccJerk-std()-Z
-	# tBodyGyro-std()-X
-	# tBodyGyro-std()-Y
-	# tBodyGyro-std()-Z
-	# tBodyGyroJerk-std()-X
-	# tBodyGyroJerk-std()-Y
-	# tBodyGyroJerk-std()-Z
-	# tBodyAccMag-std()
-	# tGravityAccMag-std()
-	# tBodyAccJerkMag-std()
-	# tBodyGyroMag-std()
-	# tBodyGyroJerkMag-std()
-	# fBodyAcc-std()-X
-	# fBodyAcc-std()-Y
-	# fBodyAcc-std()-Z
-	# fBodyAccJerk-std()-X
-	# fBodyAccJerk-std()-Y
-	# fBodyAccJerk-std()-Z
-	# fBodyGyro-std()-X
-	# fBodyGyro-std()-Y
-	# fBodyGyro-std()-Z
-	# fBodyAccMag-std()
-	# fBodyBodyAccJerkMag-std()
-	# fBodyBodyGyroMag-std()
-	# fBodyBodyGyroJerkMag-std()
-
-	
-	
 	
 }
 	
@@ -178,6 +109,8 @@ loadRawData<-function()
     # total dataframes will go out of scope and be freed shortly, so no need to rm them (done reading data in)
     # add column names to data frame, 
 	names(Dataset)<-c('subject','activity',features[[1]])
+    Dataset$activity<-factor(Dataset$activity,labels=c('walking','climbing stairs','descending stairs','sitting','standing up','laying down'))
+
 	Dataset
 		
 }
