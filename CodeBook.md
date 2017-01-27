@@ -19,10 +19,13 @@ Some additional notes (if avaialble, otherwise you can leave this section out).
 ##Creating the tidy datafile
 
 ###Guide to create the tidy data file
-Description on how to create the tidy data file (1. download the data, ...)/
+1. Download the UCI HAR dataset, which can be found [here](https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip)
+2. Unzip the compressed dataset file. The run\_analysis.R script should be located in the same place as the "UCI HAR Dataset" directory.
+3. Start R. Source the script: '''R source("run_analysis.R")'''
+4. The tidy dataset will be stored in a dataframe called "tidyData". This can be written to file using the command '''R write.table(tidyData,file="./tidyFileOutput.txt",row.names=FALSE)
 
 ###Cleaning of the data
-Short, high-level description of what the cleaning script does. [link to the readme document that describes the code in greater detail]()
+Short, high-level description of what the cleaning script does. A more detailed description of the cleaning/tidying process can be found in the [READMEM.md](./README.md)
 
 ##Description of the variables in the tiny_data.txt file
 General description of the file including:
@@ -48,3 +51,6 @@ If available, some additional notes on the variable not covered elsewehere. If n
 
 ##Sources
 Sources you used if any, otherise leave out.
+include link to UCI study page
+another link to the dataset
+
