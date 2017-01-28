@@ -6,7 +6,7 @@ main<-function()
 	# remove unwanted columns (those that are not a mean or standard deviation measurement)
 	cleanedData<<-cleanData(rawData)
     # take the mean of the columns of interest, grouped by activity and subject
-    tidyData<<-aggregate(cleaned[,3:68],by=cleaned[,c('subject','activity')],FUN=mean)
+    tidyData<<-aggregate(cleanedData[,3:68],by=cleanedData[,c('subject','activity')],FUN=mean)
 
 	
 	
