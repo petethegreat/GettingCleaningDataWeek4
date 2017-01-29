@@ -15,18 +15,22 @@ This project consists of the following files:
 assumes that UCI dataset is located in a directory call "UCI HAR Dataset", and that run\_analysis.R is located in the sa
 Assumes that the UCI dataset is unzipped in the same directory that contains run\_analysis.R . That is, if run\_analysis.R is located at "/path/run_analysis.R", The HAR data is located in "/path/UCI HAR Dataset/".
 
-The script consists of three functions, which are invoked in the following order.
-- main() - calls loadRawData(), and stores the output as "rawData" in the parent environment (the one from which run_analysis.R was sourced). **MORE HERE**
-- loadRawData() - loads data from the test/training/X/Y files. These are merged into a single dataframe. The column/variable names are read from features.txt.
-- cleanData(rawData) - takes the raw dataframe as input, and creates a cleaned dataframe that only contains the columns of interest (means and standard deviations). The variable names are also modified to be more descriptive.
-Following this, main calls the (builtin) aggregate function summarise the cleaned dataframe, creating the final tidy dataset. main() assigns the raw, cleaned, and tidy dataframes to variables called "rawData", "cleanedData", and "tidyData", respectively. These variables should be present in the R environment from which run\_analysis.R is sourced. 
+The script consists of three functions, described below
+
+### loadRawData 
+This function loads the raw data into one big dataframe. Reads "features.txt" to get the column names, then reads the measurements from X_train.txt and X_test.txt into seperate data frames. These are then merged (by row using rbind, train first then test) into a single dataframe called 'totalMeasures'. The subject information is then read from 'subject_train.txt' and 'subject_test.txt', and this information is merged into a single dataframe 'totalSubjects' using rbind, train first then test. Finally the activity information is read from 'y_train.txt' and 'y_test.txt' and merged into single dataframe 'totalSubjects' using rbind. These three dataframes are then merged by column using `cbind(totalSubjects,totalActivity,totalMeasures)`, and the column names are assigned.
+### cleanData
+This function takes the dataframe created by loadRawData as input, and produces a clean version. The `grep()` function is used to find column names that contain either '-mean()' and column names that contain '-std()', as these correspond to variables representing means or standard deviations, respectively. Note that columns containing '-meanFreq' are intentionally ommitted, as these variables represent an average frequency present in the data rather than the mean of a measurement. This is how I interpreted the instructions in the assignment, others may interpret things differently. The variable names are transformed from the names listed in features.txt to things that are 'more descriptive' using a series of gsub statements. A slimmed dataframe is formed by taking only the columns of interest (the means and standandard deviations, as well as subject and activity), and the descriptive names are assigned to the columns of this dataframe.
+### main
+This function is invoked when the script is sourced. It first calls loadRawData, and assigns the returned dataframe (the raw data) to the variable "rawData" in the parent environment. It then passes rawData to the functon cleanData, and assigns the returned dataframe to the variable 'cleanedData'. Finally, it uses the `aggregate` function to split the cleaned data based on subject and activity, and compute the mean of each column within each seperate subject/activity group. The result is the final tidy dataset, which is stored in a dataframe named 'tidyData' in the environment in which run_analysis.R is sourced.
+
 
 ## Additional Notes
-- variable names -  The [week 4 lecture on editing text variables](https://d3c33hcgiwev3.cloudfront.net/_1fc80d73df26808e7cfa2ce160041c60_04_01_editingTextVariables.pdf?Expires=1485648000&Signature=E0jEDAN7iXIzIjmgLSOco05-dGGlRqpbhaGRnqGsR5-3k4A5qs6Hm~6AwK9Ndq0o8VFawvA8wjC2g0IWKIa37lwLe7URHHY2YZq9YdGbcr-HBB3ENCwZBkOdhn7roAq1Mz0TO312Di9dmuy4JaP69b~r1Hmbi~BjqmqMSJ~jhw8_&Key-Pair-Id=APKAJLTNE6QMUY6HBC5A) states that variable names should be descriptive, not contain spaces or hyphens, and _where possible_, be all lower case. The variable names in the tidy dataset do not contain spaces or hyphens and are (I think) descriptive, but are also quite long. In order to improve readability the first letter of each word after the first has been capitalised. I thought that this was neccasary, otherwise it would be difficult to make sense of long strings with no spaces that were all lower case.
-- variables - excluded meanfreq, as this is the mean of the frequencies obtained from a measurement, rather than a mean of a measurement. This was how I interpreted the assignment.
+- variable names -  The week 4 lecture on editing text variables states that variable names should be descriptive, not contain spaces or hyphens, and _where possible_, be all lower case. The variable names in the tidy dataset do not contain spaces or hyphens and are (I think) descriptive, but are also quite long. In order to improve readability the first letter of each word after the first has been capitalised. I thought that this was neccasary, otherwise it would be difficult to make sense of long strings with no spaces that were all lower case.
+- Variables - variables in the raw dataset with names containing '-meanFreq' are intentionally ommitted from the clean/tidy datasets, as these variables represent an average frequency present in the data rather than the mean of a measurement. This is how I interpreted the instructions in the assignment.
+- The dataframe containing the raw data has 10299 rows and 563 columns.
+- The dataframe containing the final, tidy data has 180 rows and 68 columns.
 
-- raw data - x rows, y columns
-- tidy data - wide format X rows, N columns
 
 
 ##References
