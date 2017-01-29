@@ -1,17 +1,13 @@
-# MAKE SURE THIS CONTAINS UNITS
-
-everything is normalised to [-1 1], so all quantities are dimensionless (no units, just numbers).
-
 # UCI HAR tidied data
 
 
 ## Project Description
-A tidied dataset based on the UCI Human activities research dataset. 
+The aim of this project is to produce a tidied dataset from the UCI Human activities research dataset. 
 
 ##Study design and data processing
 
 ###Collection of the raw data
-The raw data was collected using the sensors on a Samsung Galaxy S II phone. Sensor data was recorded while study participants where engaged in six types of physical activity, with thhe phone clipped to their waist. The accelerometer and gyroscope on the phone were used to measure acceleration and angular velocity
+The raw data was collected using the sensors on a Samsung Galaxy S II phone. Sensor data was recorded while study participants where engaged in six types of physical activity, with thhe phone clipped to their waist. The accelerometer and gyroscope on the phone were used to measure acceleration and angular velocity. These measurements were processed to seperate the gravitaational component from the rest of the body's movement. Further details may be found on the [HAR website](http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones), or in the README.txt and features_info.txt files of contained in the dataset archive.
 
 ###Notes on the original (raw) data 
 Some additional notes (if avaialble, otherwise you can leave this section out).
