@@ -34,7 +34,7 @@ This function is invoked when the script is sourced. It first calls loadRawData,
 
 
 ##References
--- Codebook layout based on https://gist.github.com/JorisSchut/dbc1fc0402f28cad9b41 
--- David Hood's [Getting and cleaning the assignment post](https://thoughtfulbloke.wordpress.com/2015/09/09/getting-and-cleaning-the-assignment/)
+- Codebook layout based on https://gist.github.com/JorisSchut/dbc1fc0402f28cad9b41 
+- David Hood's [Getting and cleaning the assignment post](https://thoughtfulbloke.wordpress.com/2015/09/09/getting-and-cleaning-the-assignment/)
 
 
