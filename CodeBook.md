@@ -20,7 +20,7 @@ The raw data was collected using the sensors on a Samsung Galaxy S II phone. Sen
 ###Cleaning of the data
 The cleaning script `run_analysis.R` first takes all of the raw data and consolidates all of the information (from both the testing and training sets) into a single dataframe. It then creates a cleaned dataframe by selecting only the variables of interest (mean and standard deviation quantities) from the raw data. Variable names in the cleaned dataframe are modified to be more descriptive. Finally, the observations are grouped by subject and activity, and the mean for each variable of interest is computed within each group. A more detailed description of the cleaning/tidying process can be found in the [README.md](./README.md)
 
-##Description of the variables in the tiny_data.txt file
+##Description of the variables in the tidy.txt file
 The tidy datafile is a flat format table, with variables (column entries) seperated by spaces and rows seperated by line. It can be read into R using
 '''R
 tidy<-read.table('./tidy.txt',header=TRUE)
