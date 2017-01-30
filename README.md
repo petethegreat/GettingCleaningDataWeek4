@@ -26,7 +26,7 @@ This function is invoked when the script is sourced. It first calls loadRawData,
 
 
 ## Additional Notes
-- variable names -  The week 4 lecture on editing text variables states that variable names should be descriptive, not contain spaces or hyphens, and _where possible_, be all lower case. The variable names in the tidy dataset do not contain spaces or hyphens and are (I think) descriptive, but are also quite long. In order to improve readability the first letter of each word after the first has been capitalised. I thought that this was neccasary, otherwise it would be difficult to make sense of long strings with no spaces that were all lower case.
+- variable names -  The week 4 lecture on editing text variables states that variable names should be descriptive, not contain spaces or hyphens, and _where possible_, be all lower case. The variable names in the tidy dataset do not contain spaces or hyphens and are (I think) descriptive, but are also quite long. In order to improve readability the first letter of each word after the first has been capitalised. I think that, in this case, it is neccasary to include some uppercase letters in the variable names, otherwise it would be difficult to make sense of long lowercase strings that contained no spaces.
 - Variables - variables in the raw dataset with names containing '-meanFreq' are intentionally ommitted from the clean/tidy datasets, as these variables represent an average frequency present in the data rather than the mean of a measurement. This is how I interpreted the instructions in the assignment.
 - The dataframe containing the raw data has 10299 rows and 563 columns.
 - The dataframe containing the final, tidy data has 180 rows and 68 columns.
