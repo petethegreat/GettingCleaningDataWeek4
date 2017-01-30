@@ -22,9 +22,11 @@ The cleaning script `run_analysis.R` first takes all of the raw data and consoli
 
 ##Description of the variables in the tidy.txt file
 The tidy datafile is a flat format table, with variables (column entries) seperated by spaces and rows seperated by line. It can be read into R using
+
 '''R
 tidy<-read.table('./tidy.txt',header=TRUE)
 '''
+
 The tidy dataframe consists of 180 rows and 68 columns. The column entries (variables) are described below.
 
 ### subject
