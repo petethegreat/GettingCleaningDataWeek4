@@ -9,9 +9,6 @@ The aim of this project is to produce a tidied dataset from the UCI Human activi
 ###Collection of the raw data
 The raw data was collected using the sensors on a Samsung Galaxy S II phone. Sensor data was recorded while study participants where engaged in six types of physical activity, with thhe phone clipped to their waist. The accelerometer and gyroscope on the phone were used to measure acceleration and angular velocity. These measurements were processed to seperate the gravitaational component from the rest of the body's movement. Further details may be found on the [HAR website](http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones), or in the README.txt and features_info.txt files of contained in the [dataset archive](https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip). Note that in the following 'raw data' refers to the feature,subject and activity variables contained in the UCI HAR dataset, NOT the time series data from the smartphone accelerometer/gyro. The accelerometer/gyroscope data is also contained in the UCI dataset, but was not used in this analysis.
 
-###Notes on the original (raw) data 
-Some additional notes (if avaialble, otherwise you can leave this section out).
-
 ##Creating the tidy datafile
 
 ###Guide to create the tidy data file
@@ -24,26 +21,11 @@ Some additional notes (if avaialble, otherwise you can leave this section out).
 The cleaning script `run_analysis.R` first takes all of the raw data and consolidates all of the information (from both the testing and training sets) into a single dataframe. It then creates a cleaned dataframe by selecting only the variables of interest (mean and standard deviation quantities) from the raw data. Variable names in the cleaned dataframe are modified to be more descriptive. Finally, the observations are grouped by subject and activity, and the mean for each variable of interest is computed within each group. A more detailed description of the cleaning/tidying process can be found in the [README.md](./README.md)
 
 ##Description of the variables in the tiny_data.txt file
-General description of the file including:
- - Dimensions of the dataset
- - Summary of the data
- - Variables present in the dataset
-
-(you can easily use Rcode for this, just load the dataset and provide the information directly form the tidy data file)
-
-###Variable 1 (repeat this section for all variables in the dataset)
-Short description of what the variable describes.
-
-Some information on the variable including:
- - Class of the variable
- - Unique values/levels of the variable
- - Unit of measurement (if no unit of measurement list this as well)
- - In case names follow some schema, describe how entries were constructed (for example time-body-gyroscope-z has 4 levels of descriptors. Describe these 4 levels). 
-
-(you can easily use Rcode for this, just load the dataset and provide the information directly form the tidy data file)
-
-####Notes on variable 1:
-If available, some additional notes on the variable not covered elsewehere. If no notes are present leave this section out.
+The tidy datafile is a flat format table, with variables (column entries) seperated by spaces and rows seperated by line. It can be read into R using
+'''R
+tidy<-read.table('./tidy.txt',header=TRUE)
+'''
+The tidy dataframe consists of 180 rows and 68 columns. The column entries (variables) are described below.
 
 ### subject
 - subject id correspoinding to one of the participants in the UCI HAR study.
